@@ -1,0 +1,221 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="/js/jquery_3_2_1.js"></script>
+    <script src="/js/bootstrap3_3_7_min.js"></script>
+    <script src="/js/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap3_3_7_min.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+
+    <style type="text/css">
+        .container {
+            font-family: 微軟正黑體;
+            font-size: 16px;
+        }
+
+        .digit3 {
+            width: 50px;
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 5px;
+        }
+
+        .nopadding {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            setDefault();
+
+            $("#btnExcellentCherrywine").on('click', function () {
+                $("#box").val(220);
+                $("#Hbox").val(220);
+                cal();
+                Hcal();
+                return false;
+            });
+            $("#btnMAC").on('click', function () {
+                $("#box").val(260);
+                $("#Hbox").val(260);
+                cal();
+                Hcal();
+                return false;
+            });
+
+        });
+        function cal() {
+            var box = parseInt($("#box").val());
+            var boxCount = parseInt($("#boxCount").val());
+            var tubeBox = parseInt($("#tubeBox").val());
+            var tubeBoxCount = parseInt($("#tubeBoxCount").val());
+            var cost10 = (tubeBoxCount / boxCount) * box + tubeBox;
+            $("#packCost").html(formatFloat(cost10 / 10, 2));
+            $("#tubeCost").html(formatFloat(cost10 / 10 / 20, 2));
+            $("#packSave").html(formatFloat(125 - cost10 / 10, 2));
+            $("#tubeSave").html(formatFloat((125 - cost10 / 10) / 20, 2));
+        }
+        function Hcal() {
+            var Hbox = parseInt($("#Hbox").val());
+            var HboxCount = parseInt($("#HboxCount").val());
+            var Hfilterpack = parseInt($("#Hfilterpack").val());
+            var Hpaperpack = parseInt($("#Hpaperpack").val());
+            //cost10=10pack*20(cig/pack)=200cig
+            var cost10 = Hfilterpack * 2 + Hpaperpack * 4 + Hbox;
+            $("#HpackCost").html(formatFloat(cost10 / 10, 2));
+            $("#HcigCost").html(formatFloat(cost10 / 10 / 20, 2));
+            $("#HpackSave").html(formatFloat(125 - cost10 / 10, 2));
+            $("#HcigSave").html(formatFloat((125 - cost10 / 10) / 20, 2));
+        }
+        function clearres() {
+            $("#box").val('');
+            $("#packCost").html('');
+            $("#tubeCost").html('');
+            $("#packSave").html('');
+            $("#tubeSave").html('');
+            $("#Hbox").val('');
+            $("#HpackCost").html('');
+            $("#HcigCost").html('');
+            $("#HpackSave").html('');
+            $("#HcigSave").html('');
+            setDefault();
+        }
+        function setDefault() {
+            $("#box").val();
+            $("#boxCount").val(66);
+            $("#tubeBox").val(200);
+            $("#tubeBoxCount").val(200);
+
+            $("#HboxCount").val(66);
+            $("#Hfilterpack").val(70);
+            $("#Hpaperpack").val(25);
+            $("#Hbox").focus();
+        }
+        function formatFloat(num, pos) {
+            var size = Math.pow(10, pos);
+            return Math.round(num * size) / size;
+        }
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="container col-md-8 col-md-offset-2">
+            <div class="row" style="height: 200px;">
+            </div>
+            <%--艾瑟倫櫻桃酒--%>
+            <div class="row">
+                <div class="col-md-4 nopadding">
+                    <button id="btnExcellentCherrywine" class="btn btn-success">艾瑟倫櫻桃酒$220</button>
+                    <button id="btnMAC" class="btn btn-warning">麥哲倫$260</button>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 nopadding" style="border: 1px solid #82fff4;">
+                    <table style="background-color: #e8fffd; width: 100%;">
+                        <tr>
+                            <td colspan="2" style="font-size: 24px;">手捲菸</td>
+                        </tr>
+                        <tr>
+                            <td>菸草單價</td>
+                            <td>
+                                <input id="Hbox" type="text" class="digit3" tabindex="1" onchange="Hcal()" /></td>
+                        </tr>
+                        <tr>
+                            <td>每包菸草可捲煙管數</td>
+                            <td><font style="font-size: 14px;">&nbsp;(以每包可捲200根計)</font></td>
+                        </tr>
+                        <tr>
+                            <td>濾嘴每包要價</td>
+                            <td>
+                                <input id="Hfilterpack" type="text" class="digit3" tabindex="3" onchange="Hcal()" /></td>
+                        </tr>
+                        <tr>
+                            <td>菸紙每包</td>
+                            <td>
+                                <input id="Hpaperpack" type="text" class="digit3" tabindex="4" onchange="Hcal()" /></td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td>每包成本<br />
+                                (以每包125元為準)</td>
+                            <td><span id="HpackCost"></span>元</td>
+                            <td>每支成本</td>
+                            <td><span id="HcigCost"></span>元</td>
+                        </tr>
+                        <tr>
+                            <td>每包省下<br />
+                                (以每包125元為準)</td>
+                            <td><span id="HpackSave"></span>元</td>
+                            <td>每支省下</td>
+                            <td><span id="HcigSave"></span>元</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-md-4 nopadding" style="border: 1px solid #c77fff; margin-left: 10px !important;">
+                    <table style="background-color: #f5e8ff; width: 100%;">
+                        <tr style="border-bottom: 1px solid #a23ffa;">
+                            <td colspan="2" style="font-size: 24px;">菸管</td>
+                        </tr>
+                        <tr>
+                            <td>菸草單價</td>
+                            <td>
+                                <input id="box" type="text" class="digit3" tabindex="7" onchange="cal()" /></td>
+                        </tr>
+                        <tr>
+                            <td>每包菸草可做煙管數</td>
+                            <td>
+                                <input id="boxCount" type="text" class="digit3" tabindex="8" onchange="cal()" /><font style="font-size: 14px;">&nbsp;(每包捲66根，3包可捲200根)</font></td>
+                        </tr>
+                        <tr>
+                            <td>菸管每盒要價</td>
+                            <td>
+                                <input id="tubeBox" type="text" class="digit3" tabindex="9" onchange="cal()" /></td>
+                        </tr>
+                        <tr>
+                            <td>菸管每盒支數</td>
+                            <td>
+                                <input id="tubeBoxCount" type="text" class="digit3" tabindex="10" onchange="cal()" /></td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td>每包成本<br />
+                                (以每包125元為準)</td>
+                            <td><span id="packCost"></span>元</td>
+                            <td>每支成本</td>
+                            <td><span id="tubeCost"></span>元</td>
+                        </tr>
+                        <tr>
+                            <td>每包省下<br />
+                                (以每包125元為準)</td>
+                            <td><span id="packSave"></span>元</td>
+                            <td>每支省下</td>
+                            <td><span id="tubeSave"></span>元</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <button id="btnGO" class="btn btn-primary btn-block" tabindex="5" onclick="cal(); Hcal(); return false;">計算</button>
+                </div>
+                <div class="col-md-2">
+                    <button id="btnClear" class="btn btn-primary btn-block" tabindex="6" onclick="clearres(); return false;">清除</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

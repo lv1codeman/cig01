@@ -1,0 +1,11 @@
+﻿.mob {
+    position: absolute;
+    z-index: 1;
+    visibility: hidden;
+}
+.dmgtext {
+    position: absolute;
+    z-index: 2;
+    color: red;
+    font-size: 14pt;
+}
