@@ -69,7 +69,7 @@
             var Hfilterpack = parseInt($("#Hfilterpack").val());
             var Hpaperpack = parseInt($("#Hpaperpack").val());
             //cost10=10pack*20(cig/pack)=200cig
-            var cost10 = Hfilterpack * 2 + Hpaperpack * 4 + Hbox;
+            var cost10 = Hfilterpack * 2 + Hpaperpack * 4 + Hbox;	//cost10=the cost of 10 packs.
             $("#HpackCost").html(formatFloat(cost10 / 10, 2));
             $("#HcigCost").html(formatFloat(cost10 / 10 / 20, 2));
             $("#HpackSave").html(formatFloat(125 - cost10 / 10, 2));
