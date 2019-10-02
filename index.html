@@ -24,13 +24,18 @@
         .linebar {
             padding-bottom: 0.25em;
         }
-
+        .marginLeft10px {
+            margin-left: 10px;
+        }
         .color-warrior {
             background-color: #C79C6E !important;
         }
 
             .color-warrior:hover {
-                border-color: black;
+                background-color: #ad875f !important;
+                color: white;
+                border-color: #7a5f43;
+                border-width: 1px;
             }
 
         .color-rogue {
@@ -39,7 +44,10 @@
         }
 
             .color-rogue:hover {
-                border-color: black;
+                background-color: #e6dc5e !important;
+                color: white;
+                border-color: #b3aa49;
+                border-width: 1px;
             }
 
         .color-hunter {
@@ -47,15 +55,10 @@
         }
 
             .color-hunter:hover {
-                border-color: black;
-            }
-
-        .color-shaman {
-            background-color: #0070DE !important;
-        }
-
-            .color-shaman:hover {
-                border-color: black;
+                background-color: #97ba65 !important;
+                color: white;
+                border-color: #6d8749;
+                border-width: 1px;
             }
     </style>
     <script>
@@ -123,7 +126,7 @@
             var ap = parseFloat($("#ap").val()) || 0;
             var apstr = parseFloat($("#str").val()) || 0;
             var apagi = parseFloat($("#agi").val()) || 0;
-            
+
             var dps = wpndps + ((ap + apstr * classWeight_str + apagi * classWeight_agi) / 14 * speed);
 
             $("#dps").html('' + formatFloat(dps, 2));
@@ -135,7 +138,7 @@
             var wpndps2 = (mindmg2 + ((maxdmg2 - mindmg2) / 2)) / speed;
 
             $("#wpndps2").html('' + formatFloat(wpndps2, 2));
-                       
+
             var ap2 = parseFloat($("#ap2").val()) || 0;
             var apstr2 = parseFloat($("#str2").val()) || 0;
             var apagi2 = parseFloat($("#agi2").val()) || 0;
@@ -154,6 +157,45 @@
         <div class="row align-items-end" style="height: 20vh;">
             <div class="col">
                 輸入武器大小傷、速度、屬性後，按下欲查詢的職業<br />
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalLong">
+                    公式介紹
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">公式介紹</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <pre>
+力量：
+（每+1）
++2近戰攻擊強度：戰士、薩滿、德魯伊、聖騎士
++1近戰攻擊強度：盜賊、獵人
+
+敏捷：
++1敏 = +2護甲值
++20敏 = 致命一擊率+1％（獵人+53敏 = +1%致命一擊率，盜賊+29敏 = +1%致命一擊率）
++20敏 = 閃避率+1％（獵人+26.5敏 = +1%閃避率，盜賊+14.5敏 = +1%閃避率）
+對盜賊、獵人，+1敏 = +1近戰攻擊強度
+對戰士、盜賊、獵人，+1敏 = +2遠端攻擊強度
+
+武器DPS=((大傷-小傷)/2 + (小傷)) / 武器速度;
+實際DPS=武器DPS + ((AP + 力量*職業AP加成 + 敏捷*職業AP加成) / 14 * 武器速度)
+</pre>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row align-items-center" style="padding: 10px 0 10px 0;">
@@ -231,8 +273,8 @@
             </div>
             <div class="w-100" style="margin: 10px 0 0 15px;">
                 <button id="setWarrior" class="btn color-warrior">戰士</button>
-                <button id="setRogue" class="btn color-rogue">盜賊</button>
-                <button id="setHunter" class="btn color-hunter">獵人</button>
+                <button id="setRogue" class="btn color-rogue marginLeft10px">盜賊</button>
+                <button id="setHunter" class="btn color-hunter marginLeft10px">獵人</button>
             </div>
             <div class="w-100" style="margin: 20px 0 0 15px;">
                 <button class="btn btn-primary" id="reset">清空資料</button>
