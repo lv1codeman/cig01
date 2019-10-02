@@ -2,236 +2,259 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <script src="js/jquery_3_2_1.js"></script>
-    <script src="js/bootstrap3_3_7_min.js"></script>
-    <script src="js/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="css/bootstrap3_3_7_min.css" />
-    <link rel="stylesheet" href="css/main.css" />
-
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style type="text/css">
         .container {
             font-family: 微軟正黑體;
             font-size: 16px;
         }
 
+        /*.row {
+            height: 100vh;
+        }*/
+
         .digit3 {
-            width: 50px;
+            width: 4em;
             text-align: center;
         }
 
-        table {
-            border-collapse: collapse;
+        .linebar {
+            padding-bottom: 0.25em;
         }
 
-        th, td {
-            padding: 5px;
+        .color-warrior {
+            background-color: #C79C6E !important;
         }
 
-        .nopadding {
-            padding: 0 !important;
-            margin: 0 !important;
+            .color-warrior:hover {
+                border-color: black;
+            }
+
+        .color-rogue {
+            background-color: #FFF569 !important;
+            color: black;
         }
+
+            .color-rogue:hover {
+                border-color: black;
+            }
+
+        .color-hunter {
+            background-color: #ABD473 !important;
+        }
+
+            .color-hunter:hover {
+                border-color: black;
+            }
+
+        .color-shaman {
+            background-color: #0070DE !important;
+        }
+
+            .color-shaman:hover {
+                border-color: black;
+            }
     </style>
     <script>
         $(document).ready(function () {
-            setDefault();
+            $("#setWarrior").on('click', function () {
+                $('#classWeight_str').val(2);
+                $('#classWeight_agi').val(0);
+                cal();
+                return false;
+            });
+            $("#setRogue").on('click', function () {
+                $('#classWeight_str').val(1);
+                $('#classWeight_agi').val(1);
+                cal();
+                return false;
+            });
+            $("#setHunter").on('click', function () {
+                $('#classWeight_str').val(1);
+                $('#classWeight_agi').val(1);
+                cal();
+                return false;
+            });
 
-            $("#btnExcellentCherrywine").on('click', function () {
-                $("#box").val(220);
-                $("#Hbox").val(220);
-                cal();
-                Hcal();
+            $("#reset").on('click', function () {
+                $('#mindmg').val('');
+                $('#maxdmg').val('');
+                $('#speed').val('');
+                $('#ap').val('');
+                $('#str').val('');
+                $('#agi').val('');
+                $('#wpndps').html('');
+                $('#dps').html('');
+
+                $('#mindmg2').val('');
+                $('#maxdmg2').val('');
+                $('#speed2').val('');
+                $('#ap2').val('');
+                $('#str2').val('');
+                $('#agi2').val('');
+                $('#wpndps2').html('');
+                $('#dps2').html('');
                 return false;
             });
-            $("#btnMAC").on('click', function () {
-                $("#box").val(260);
-                $("#Hbox").val(260);
-                cal();
-                Hcal();
-                return false;
-            });
+
 
         });
-        function cal() {
-            var box = parseInt($("#box").val());
-            var boxCount = parseInt($("#boxCount").val());
-            var tubeBox = parseInt($("#tubeBox").val());
-            var tubeBoxCount = parseInt($("#tubeBoxCount").val());
-            var cost10 = (tubeBoxCount / boxCount) * box + tubeBox;
-            $("#packCost").html(formatFloat(cost10 / 10, 2));
-            $("#tubeCost").html(formatFloat(cost10 / 10 / 20, 2));
-            $("#packSave").html(formatFloat(125 - cost10 / 10, 2));
-            $("#tubeSave").html(formatFloat((125 - cost10 / 10) / 20, 2));
-        }
-        function Hcal() {
-            var Hbox = parseInt($("#Hbox").val());
-            var HboxCount = parseInt($("#HboxCount").val());
-            var Hfilterpack = parseInt($("#Hfilterpack").val());
-            var Hpaperpack = parseInt($("#Hpaperpack").val());
-            //cost10=10pack*20(cig/pack)=200cig
-            var cost10 = Hfilterpack * 2 + Hpaperpack * 4 + Hbox;	//cost10=the cost of 10 packs.
-            $("#HpackCost").html(formatFloat(cost10 / 10, 2));
-            $("#HcigCost").html(formatFloat(cost10 / 10 / 20, 2));
-            $("#HpackSave").html(formatFloat(125 - cost10 / 10, 2));
-            $("#HcigSave").html(formatFloat((125 - cost10 / 10) / 20, 2));
-        }
-        function clearres() {
-            $("#box").val('');
-            $("#packCost").html('');
-            $("#tubeCost").html('');
-            $("#packSave").html('');
-            $("#tubeSave").html('');
-            $("#Hbox").val('');
-            $("#HpackCost").html('');
-            $("#HcigCost").html('');
-            $("#HpackSave").html('');
-            $("#HcigSave").html('');
-            setDefault();
-        }
-        function setDefault() {
-            $("#box").val();
-            $("#boxCount").val(66);
-            $("#tubeBox").val(200);
-            $("#tubeBoxCount").val(200);
 
-            $("#HboxCount").val(66);
-            $("#Hfilterpack").val(70);
-            $("#Hpaperpack").val(25);
-            $("#Hbox").focus();
-        }
         function formatFloat(num, pos) {
             var size = Math.pow(10, pos);
             return Math.round(num * size) / size;
         }
+
+        function cal() {
+
+            var mindmg = parseFloat($("#mindmg").val());
+            var maxdmg = parseFloat($("#maxdmg").val());
+            var speed = parseFloat($("#speed").val());
+            var wpndps = (mindmg + ((maxdmg - mindmg) / 2)) / speed;
+
+            $("#wpndps").html('' + formatFloat(wpndps, 2));
+
+            var classWeight_str = $('#classWeight_str').val();
+            var classWeight_agi = $('#classWeight_agi').val();
+
+
+            var ap = parseFloat($("#ap").val()) || 0;
+            var apstr = parseFloat($("#str").val()) || 0;
+            var apagi = parseFloat($("#agi").val()) || 0;
+            
+            var dps = wpndps + ((ap + apstr * classWeight_str + apagi * classWeight_agi) / 14 * speed);
+
+            $("#dps").html('' + formatFloat(dps, 2));
+
+            //----
+            var mindmg2 = parseFloat($("#mindmg2").val());
+            var maxdmg2 = parseFloat($("#maxdmg2").val());
+            var speed2 = parseFloat($("#speed2").val());
+            var wpndps2 = (mindmg2 + ((maxdmg2 - mindmg2) / 2)) / speed;
+
+            $("#wpndps2").html('' + formatFloat(wpndps2, 2));
+
+            var classWeight_str2 = $('#classWeight_str').val();
+            var classWeight_agi2 = $('#classWeight_agi').val();
+
+
+            var ap2 = parseFloat($("#ap2").val()) || 0;
+            var apstr2 = parseFloat($("#str2").val()) || 0;
+            var apagi2 = parseFloat($("#agi2").val()) || 0;
+
+            var dps2 = wpndps2 + ((ap2 + apstr2 * classWeight_str + apagi2 * classWeight_agi) / 14 * speed2);
+
+            $("#dps2").html('' + formatFloat(dps2, 2));
+
+        }
     </script>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div class="container col-md-8 col-md-offset-2">
-            <div class="row" style="height: 200px;">
-            </div>
-            <!--艾瑟倫櫻桃酒-->
-            <div class="row">
-                <div class="col-md-4 nopadding">
-                    <button id="btnExcellentCherrywine" class="btn btn-success">艾瑟倫櫻桃酒$220</button>
-                    <button id="btnMAC" class="btn btn-warning">麥哲倫$260</button>
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 nopadding" style="border: 1px solid #82fff4;">
-                    <table style="background-color: #e8fffd; width: 100%;">
-                        <tr>
-                            <td colspan="2" style="font-size: 24px;">手捲菸</td>
-                        </tr>
-                        <tr>
-                            <td>菸草單價</td>
-                            <td>
-                                <input id="Hbox" type="text" class="digit3" tabindex="1" onchange="Hcal()" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>每包菸草可捲煙管數</td>
-                            <td><font style="font-size: 14px;">&nbsp;(以每包可捲200根計)</font></td>
-                        </tr>
-                        <tr>
-                            <td>濾嘴每包要價</td>
-                            <td>
-                                <input id="Hfilterpack" type="text" class="digit3" tabindex="3" onchange="Hcal()" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>菸紙每包</td>
-                            <td>
-                                <input id="Hpaperpack" type="text" class="digit3" tabindex="4" onchange="Hcal()" />
-                            </td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td>
-                                每包成本<br />
-                                ((以每包125元為準)
-                            </td>
-                            <td><span id="HpackCost"></span>元</td>
-                            <td>每支成本</td>
-                            <td><span id="HcigCost"></span>元</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                每包省下<br />
-                                (以每包125元為準)
-                            </td>
-                            <td><span id="HpackSave"></span>元</td>
-                            <td>每支省下</td>
-                            <td><span id="HcigSave"></span>元</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="col-md-4 nopadding" style="border: 1px solid #c77fff; margin-left: 10px !important;">
-                    <table style="background-color: #f5e8ff; width: 100%;">
-                        <tr style="border-bottom: 1px solid #a23ffa;">
-                            <td colspan="2" style="font-size: 24px;">菸管</td>
-                        </tr>
-                        <tr>
-                            <td>菸草單價</td>
-                            <td>
-                                <input id="box" type="text" class="digit3" tabindex="7" onchange="cal()" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>每包菸草可做煙管數</td>
-                            <td>
-                                <input id="boxCount" type="text" class="digit3" tabindex="8" onchange="cal()" />
-                                <font style="font-size: 14px;">&nbsp;(每包捲66根，3包可捲200根)</font>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>菸管每盒要價</td>
-                            <td>
-                                <input id="tubeBox" type="text" class="digit3" tabindex="9" onchange="cal()" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>菸管每盒支數</td>
-                            <td>
-                                <input id="tubeBoxCount" type="text" class="digit3" tabindex="10" onchange="cal()" />
-                            </td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td>
-                                每包成本<br />
-                                (以每包125元為準)
-                            </td>
-                            <td><span id="packCost"></span>元</td>
-                            <td>每支成本</td>
-                            <td><span id="tubeCost"></span>元</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                每包省下<br />
-                                (以每包125元為準)
-                            </td>
-                            <td><span id="packSave"></span>元</td>
-                            <td>每支省下</td>
-                            <td><span id="tubeSave"></span>元</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-2">
-                    <button id="btnGO" class="btn btn-primary btn-block" tabindex="5" onclick="cal(); Hcal(); return false;">計算</button>
-                </div>
-                <div class="col-md-2">
-                    <button id="btnClear" class="btn btn-primary btn-block" tabindex="6" onclick="clearres(); return false;">清除</button>
-                </div>
+    <div class="container">
+        <span id="classWeight_str" style="display: none;"></span>
+        <span id="classWeight_agi" style="display: none;"></span>
+        <div class="row align-items-end" style="height: 30vh;">
+            <div class="col">
+                輸入武器大小傷、速度、屬性後，按下欲查詢的職業<br />
+                <button id="setWarrior" class="btn color-warrior">戰士</button>
+                <button id="setRogue" class="btn color-rogue">盜賊</button>
+                <button id="setHunter" class="btn color-hunter">獵人</button>
             </div>
         </div>
-    </form>
+        <div class="row align-items-center" style="padding: 10px 0 10px 0;">
+            <div class="col">
+                <table class="border border-primary" cellpadding="2">
+                    <tr>
+                        <td></td>
+                        <td>(小傷)</td>
+                        <td>(大傷)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            武器傷害
+                            <input id="mindmg" type="text" class="digit3" /> ~
+                            <input id="maxdmg" type="text" class="digit3" />
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            武器速度
+                            <input id="speed" type="text" class="digit3" />
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>AP <input id="ap" type="text" class="digit3" /></td>
+                        <td>力量 <input id="str" type="text" class="digit3" /></td>
+                        <td>敏捷 <input id="agi" type="text" class="digit3" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div class="linebar">
+                                武器DPS = <span id="wpndps"></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div class="linebar">
+                                實際DPS = <span id="dps"></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col">
+                <table class="border border-primary" cellpadding="2" style="margin-left: -200px;">
+                    <tr>
+                        <td></td>
+                        <td>(小傷)</td>
+                        <td>(大傷)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            武器傷害
+                            <input id="mindmg2" type="text" class="digit3" /> ~
+                            <input id="maxdmg2" type="text" class="digit3" />
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            武器速度
+                            <input id="speed2" type="text" class="digit3" />
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>AP <input id="ap2" type="text" class="digit3" /></td>
+                        <td>力量 <input id="str2" type="text" class="digit3" /></td>
+                        <td>敏捷 <input id="agi2" type="text" class="digit3" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div class="linebar">
+                                武器DPS = <span id="wpndps2"></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div class="linebar">
+                                實際DPS = <span id="dps2"></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="w-100" style="margin: 10px 0 0 15px;">
+                <button class="btn btn-primary" id="reset">清空資料</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
