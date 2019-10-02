@@ -109,17 +109,16 @@
         }
 
         function cal() {
+            var classWeight_str = $('#classWeight_str').val();
+            var classWeight_agi = $('#classWeight_agi').val();
 
+            //----
             var mindmg = parseFloat($("#mindmg").val());
             var maxdmg = parseFloat($("#maxdmg").val());
             var speed = parseFloat($("#speed").val());
             var wpndps = (mindmg + ((maxdmg - mindmg) / 2)) / speed;
 
             $("#wpndps").html('' + formatFloat(wpndps, 2));
-
-            var classWeight_str = $('#classWeight_str').val();
-            var classWeight_agi = $('#classWeight_agi').val();
-
 
             var ap = parseFloat($("#ap").val()) || 0;
             var apstr = parseFloat($("#str").val()) || 0;
@@ -136,11 +135,7 @@
             var wpndps2 = (mindmg2 + ((maxdmg2 - mindmg2) / 2)) / speed;
 
             $("#wpndps2").html('' + formatFloat(wpndps2, 2));
-
-            var classWeight_str2 = $('#classWeight_str').val();
-            var classWeight_agi2 = $('#classWeight_agi').val();
-
-
+                       
             var ap2 = parseFloat($("#ap2").val()) || 0;
             var apstr2 = parseFloat($("#str2").val()) || 0;
             var apagi2 = parseFloat($("#agi2").val()) || 0;
