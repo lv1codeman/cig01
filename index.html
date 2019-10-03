@@ -102,7 +102,23 @@
                 $('#dps2').html('');
                 return false;
             });
-
+            
+            $("#sample").on('click', function () {
+                $('#mindmg').val(46);
+                $('#maxdmg').val(86);
+                $('#speed').val(2.20);
+                $('#ap').val(28);
+                $('#str').val(0);
+                $('#agi').val(0);
+                
+                $('#mindmg2').val(50);
+                $('#maxdmg2').val(95);
+                $('#speed2').val(2.10);
+                $('#ap2').val(0);
+                $('#str2').val(0);
+                $('#agi2').val(0);
+                return false;
+            });
 
         });
 
@@ -135,8 +151,8 @@
             var mindmg2 = parseFloat($("#mindmg2").val());
             var maxdmg2 = parseFloat($("#maxdmg2").val());
             var speed2 = parseFloat($("#speed2").val());
-            var wpndps2 = (mindmg2 + ((maxdmg2 - mindmg2) / 2)) / speed;
-
+            var wpndps2 = (mindmg2 + (maxdmg2 - mindmg2) / 2) / speed2;
+            
             $("#wpndps2").html('' + formatFloat(wpndps2, 2));
 
             var ap2 = parseFloat($("#ap2").val()) || 0;
@@ -278,6 +294,7 @@
             </div>
             <div class="w-100" style="margin: 20px 0 0 15px;">
                 <button class="btn btn-primary" id="reset">清空資料</button>
+                <button class="btn btn-warning" id="sample">套用範例</button>
             </div>
         </div>
     </div>
